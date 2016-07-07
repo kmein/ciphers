@@ -67,5 +67,5 @@ Veni, vidi, vici.
 fsfe fs ly smpuaooe eolp
 
 % ciphers-exe -d -cvigenere:snake <<< "fsfe fs ly smpuaooe eolp"
-"meet me at elephant lake"
+meet me at elephant lake
 ```
