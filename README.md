@@ -1,6 +1,6 @@
 # ciphers
 
-Meet `ciphers` the Swiss Army Knife of classical cryptography.
+Meet `ciphers`—the Swiss Army Knife of classical cryptography!
 
 ## Features
 `ciphers` can encrypt and decrypt the following ciphers for you:
@@ -54,3 +54,12 @@ Available options:
   -d,--decrypt             act as decrypt filter
 ```
 
+## Examples
+
+```
+$ echo "Veni, vidi, vici." | ciphers-exe -c caesar:3
+Yhql, ylgl, ylfl.
+
+$ echo "Yhql, ylgl, ylfl." | ciphers-exe -d -c caesar:3
+Veni, vidi, vici.
+```
