@@ -14,5 +14,5 @@ alphabetPos :: Char -> Maybe Int
 alphabetPos c = lookup (toLower c) (zip ['a'..'z'] [1..])
 
 charAtPos :: Int -> Maybe Char
-charAtPos p = lookup (abs p `mod` 26) (zip [1..] ['a'..'z'])
+charAtPos p = lookup (abs $ p `mod` 26) (zip [1..] ['a'..'z'])
 
