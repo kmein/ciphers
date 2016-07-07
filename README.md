@@ -57,9 +57,9 @@ Available options:
 ## Examples
 
 ```sh
-$ echo "Veni, vidi, vici." | ciphers-exe -c caesar:3
+$ ciphers-exe -c caesar:3 <<< "Veni, vidi, vici."
 Yhql, ylgl, ylfl.
 
-$ echo "Yhql, ylgl, ylfl." | ciphers-exe -d -c caesar:3
+$ ciphers-exe -d -c caesar:3 <<< "Yhql, ylgl, ylfl."
 Veni, vidi, vici.
 ```
