@@ -56,7 +56,7 @@ Available options:
 
 ## Examples
 
-```
+```sh
 $ echo "Veni, vidi, vici." | ciphers-exe -c caesar:3
 Yhql, ylgl, ylfl.
 
