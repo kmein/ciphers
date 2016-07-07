@@ -57,9 +57,15 @@ Available options:
 ## Examples
 
 ```sh
-$ ciphers-exe -c caesar:3 <<< "Veni, vidi, vici."
+% ciphers-exe -c caesar:3 <<< "Veni, vidi, vici."
 Yhql, ylgl, ylfl.
 
-$ ciphers-exe -d -c caesar:3 <<< "Yhql, ylgl, ylfl."
+% ciphers-exe -d -c caesar:3 <<< "Yhql, ylgl, ylfl."
 Veni, vidi, vici.
+
+% ciphers-exe -cvigenere:snake <<< "meet me at elephant lake"
+fsfe fs ly smpuaooe eolp
+
+% ciphers-exe -d -cvigenere:snake <<< "fsfe fs ly smpuaooe eolp"
+"meet me at elephant lake"
 ```
