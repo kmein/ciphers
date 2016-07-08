@@ -70,4 +70,10 @@ fsfe fs ly smpuaooe eolp
 
 % ciphers-exe -d -cvigenere:snake <<< "fsfe fs ly smpuaooe eolp"
 meet me at elephant lake
+
+% ciphers-exe -c onetimepad <<< "hello world" 2> msg.key
+wxjmc iaolo
+
+% cat msg.key
+osxanbllwnkx
 ```
