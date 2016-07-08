@@ -1,5 +1,6 @@
 module Main (main) where
 
+import Control.Monad (unless)
 import Data.Maybe (fromMaybe)
 import Options.Applicative
 import System.IO (stderr, hPutStr)
@@ -50,7 +51,10 @@ instance Read Cipher where
                  then [(result, drop (length attempt) r)]
                  else tryParse xs r
 
-data Direction = Encrypt | Decrypt
+data Direction
+   = Encrypt
+   | Decrypt
+   deriving (Eq)
 
 data CiphersOptions = CiphersOptions Cipher Direction
 
@@ -67,7 +71,8 @@ ciphersArgs =
 doCipher :: CiphersOptions -> IO ()
 doCipher (CiphersOptions c d) =
     if c == OneTimePad
-       then do inp <- getContents
+       then unless (d == Decrypt) $
+            do inp <- getContents
                (cipherText, key) <- oneTimePad inp <$> newStdGen
                putStr cipherText
                hPutStr stderr key

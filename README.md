@@ -48,13 +48,11 @@ ciphers - a text filter for various cryptographic ciphers
 
 Usage: ciphers-exe (-c|--cipher CIPHER[:KEY]) [-d|--decrypt]
   Encrypt/decrypt various cipher algorithms. Currently available: atbash,
-  caesar:N, grid, playfair:KEY, scytale:N, vigenere:KEY.
+  caesar:N, grid, onetimepad, playfair:KEY, scytale:N, vigenere:KEY.
 
 Available options:
   -h,--help                Show this help text
-  -c,--cipher CIPHER[:KEY] choose the cipher algorithm (one of "atbash",
-                           "caesar", "grid", "playfair", "scytale" or
-                           "vigenere")
+  -c,--cipher CIPHER[:KEY] choose the cipher algorithm
   -d,--decrypt             act as decrypt filter
 ```
 
