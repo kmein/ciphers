@@ -3,6 +3,7 @@ module Text.Cipher (module Cipher) where
 import Text.Cipher.Atbash as Cipher (atbash, unatbash)
 import Text.Cipher.Caesar as Cipher (caesar, uncaesar)
 import Text.Cipher.Grid as Cipher (grid, ungrid)
+import Text.Cipher.OneTimePad as Cipher (oneTimePad)
 import Text.Cipher.Playfair as Cipher (playfair, unplayfair)
 import Text.Cipher.Scytale as Cipher (scytale, unscytale)
 import Text.Cipher.Vigenere as Cipher (vigenere, unvigenere)

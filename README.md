@@ -9,6 +9,10 @@ Meet `ciphers`—the Swiss Army Knife of classical cryptography!
 * [Atbash](https://en.wikipedia.org/wiki/Atbash)
 * [Caesar](https://en.wikipedia.org/wiki/Caesar_cipher) which can also be used for [ROT-13](https://en.wikipedia.org/wiki/Rot13)
 * A "grid cipher" that substitutes letters with a two-digit code (taken from a 5x5-grid, see [Grid])
+* [One Time Pad](https://en.wikipedia.org/wiki/One-time_pad), which generates a
+  random key as long as the plaintext message, encrypts the plaintext (output on
+  stdout) and outputs the key one stderr, which is useful for redirecting it to
+  a file like `msg.key`.
 * [Playfair](https://en.wikipedia.org/wiki/Playfair_cipher)
 * [Scytale](https://en.wikipedia.org/wiki/Scytale)
 * [Vigenère](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher)
@@ -28,12 +32,12 @@ x 1 2 3 4 5
 (`I/J` have the same position: `24`)
 
 To encode a character of information, one combines the row and the column number of the character.
-This is then done for all characters in the message. Note that this is a _very_ weak cipher and really 
+This is then done for all characters in the message. Note that this is a _very_ weak cipher and really
 should not be used.
 
 ## Building
 
-* To build, run `stack build`. This will put an executable called `ciphers-exe` into 
+* To build, run `stack build`. This will put an executable called `ciphers-exe` into
   `.stack-work/dist/$ARCH_$OS/Cabal-$CABAL_VERSION/build/ciphers-exe/`.
 * A user-wide installation can be issued with `stack install`.
 
