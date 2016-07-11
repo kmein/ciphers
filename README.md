@@ -30,6 +30,7 @@ Meet `ciphers`—the Swiss Army Knife of classical cryptography!
 ciphers - a text filter for various cryptographic ciphers
 
 Usage: ciphers (-c|--cipher CIPHER[:KEY]) [-d|--decrypt]
+               [-g|--grouped BLOCK-SIZE]
   Encrypt/decrypt various cipher algorithms. Currently available: atbash,
   autokey:KEY, caesar:N, onetimepad, playfair:KEY, polybius, scytale:N,
   vigenere:KEY.
@@ -38,6 +39,7 @@ Available options:
   -h,--help                Show this help text
   -c,--cipher CIPHER[:KEY] choose the cipher algorithm
   -d,--decrypt             act as decrypt filter
+  -g,--grouped BLOCK-SIZE  group output in evenly sized blocks
 ```
 
 ## Examples
@@ -60,4 +62,7 @@ wxjmc iaolo
 
 % cat msg.key
 osxanbllwnkx
+
+% ciphers -g4 -cplayfair:example <<< "hide the gold in the treestump"
+IKLM QNLO UGCK TZGX OSXA TOYE EA
 ```

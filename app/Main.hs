@@ -1,6 +1,7 @@
 module Main (main) where
 
 import Control.Monad (unless)
+import Data.List.Split (chunksOf)
 import Data.Maybe (fromMaybe)
 import Options.Applicative
 import System.IO (stderr, hPutStr)
@@ -62,7 +63,12 @@ data Direction
    | Decrypt
    deriving (Eq)
 
-data CiphersOptions = CiphersOptions Cipher Direction
+data CiphersOptions
+   = CiphersOptions
+   { cipher :: Cipher
+   , direction :: Direction
+   , grouped :: Maybe Int
+   }
 
 ciphersArgs :: Parser CiphersOptions
 ciphersArgs =
@@ -73,16 +79,19 @@ ciphersArgs =
         <*> flag Encrypt Decrypt
             (long "decrypt" <> short 'd'
             <> help "act as decrypt filter")
+        <*> optional (option auto
+            (long "grouped" <> short 'g' <> metavar "BLOCK-SIZE"
+            <> help "group output in evenly sized blocks"))
 
 doCipher :: CiphersOptions -> IO ()
-doCipher (CiphersOptions c d) =
+doCipher (CiphersOptions c d g) =
     if c == OneTimePad
        then unless (d == Decrypt) $
             do inp <- getContents
                (cipherText, key) <- oneTimePad inp <$> newStdGen
                putStr cipherText
                hPutStr stderr key
-       else interact $
+       else interact $ processGrouping g $
             case (c, d) of
               (Atbash        , Encrypt) -> atbash
               (Atbash        , Decrypt) -> unatbash
@@ -98,6 +107,11 @@ doCipher (CiphersOptions c d) =
               (Scytale perim , Decrypt) -> unscytale perim
               (Vigenere key  , Encrypt) -> vigenere key
               (Vigenere key  , Decrypt) -> unvigenere key
+    where
+      processGrouping g' f =
+          case g' of
+            Just g -> unwords . chunksOf g . concat . words . f
+            Nothing -> f
 
 
 main :: IO ()
