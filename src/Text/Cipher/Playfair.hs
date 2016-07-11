@@ -1,3 +1,6 @@
+-- | This module implements the so-called Playfair cipher, a polygraphic
+-- (digraphic) substitution cipher invented by C. Wheatstone. For a detailed
+-- description, see <https://en.wikipedia.org/wiki/Playfair_cipher Wikipedia>.
 module Text.Cipher.Playfair (playfair, unplayfair) where
 
 import Control.Monad     (guard)
@@ -93,10 +96,6 @@ codeHelper subs key =
     mapM (subs (makeSquare $ makeTable key)) .
     parsePair
 
-playfair, unplayfair :: String -> String -> Maybe String
-playfair key = codeHelper encodePair key . formatEncode
-unplayfair = codeHelper decodePair
-
 formatEncode :: String -> String
 formatEncode =
     map toUpper .
@@ -111,4 +110,20 @@ formatEncode =
       adjustLength str
           | odd (length str) = str ++ "x"
           | otherwise = str
+
+-- | This function works as a quick-and-dirty full and working implementation
+-- of the Playfair cipher: Given a key phrase and a string, it returns the
+-- encrypted ciphertext in blocks of two.
+--
+-- __Note:__ Any kind of input is accepted, but characters not included in the
+-- upper and lower case alphabets will be filtered out.
+playfair :: String -> String -> Maybe String
+playfair key = codeHelper encodePair key . formatEncode
+
+-- | Decrypts a Playfair-encrypted text given a key phrase.
+--
+-- __Note:__ The given ciphertext /must/ be in uppercase ASCII letters, grouped
+-- in twos.
+unplayfair :: String -> String -> Maybe String
+unplayfair = codeHelper decodePair
 

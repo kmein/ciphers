@@ -1,3 +1,8 @@
+-- | This module implements a basic Polybius Square cipher mapping a character
+-- to a pair of integers from 1 to 5. These integers are based on the
+-- character's position in a 5x5 alphabet square. See
+-- <https://en.wikipedia.org/wiki/Polybius_square the Wikipedia article> for more
+-- info.
 module Text.Cipher.Polybius where
 
 import Data.Char (toLower)
@@ -5,6 +10,11 @@ import Data.List (delete, elemIndex, transpose)
 import Data.List.Split (chunksOf)
 import Data.Maybe (isJust)
 
+-- | Returns the Polybius-square-encrypted version of the plaintext in
+-- form of digits in groups of two. Unknown characters are mapped to "00".
+--
+-- >>> polybius "hello world"
+-- "32 51 13 13 43 00 25 43 24 13 41"
 polybius :: String -> String
 polybius = unwords . map polybiusVal
     where
@@ -18,6 +28,12 @@ polybius = unwords . map polybiusVal
                 (Just n : _) -> n + 1
                 _ -> 0
 
+-- | This is basically the inverse of the 'polybius' function.
+-- It is, however, not able to reconstruct the case information (upper/lower)
+-- based on just the indices in the square. "00" is mapped to a space.
+--
+-- __Note:__ The input string has to consist entirely of digits in groups
+-- of two.
 unpolybius :: String -> String
 unpolybius = map unpolybiusVal . words
     where
