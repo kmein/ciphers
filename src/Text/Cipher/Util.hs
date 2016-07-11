@@ -11,8 +11,8 @@ index :: (Eq a) => a -> [a] -> Int
 index c = fromJust . elemIndex c
 
 alphabetPos :: Char -> Maybe Int
-alphabetPos c = lookup (toLower c) (zip ['a'..'z'] [1..])
+alphabetPos c = elemIndex (toLower c) ['a'..'z']
 
 charAtPos :: Int -> Maybe Char
-charAtPos p = lookup (abs $ p `mod` 26) (zip [1..] ['a'..'z'])
+charAtPos p = lookup (abs $ p `mod` 26) (zip [0..] ['a'..'z'])
 

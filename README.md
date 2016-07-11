@@ -7,38 +7,21 @@ Meet `ciphers`—the Swiss Army Knife of classical cryptography!
 (Note: It does not actually crack them, you have to supply the key or passphrase yourself.)
 
 * [Atbash](https://en.wikipedia.org/wiki/Atbash)
+* [Autokey](https://en.wikipedia.org/wiki/Autokey_cipher)
 * [Caesar](https://en.wikipedia.org/wiki/Caesar_cipher) which can also be used for [ROT-13](https://en.wikipedia.org/wiki/Rot13)
-* A "grid cipher" that substitutes letters with a two-digit code (taken from a 5x5-grid, see [Grid])
 * [One Time Pad](https://en.wikipedia.org/wiki/One-time_pad), which generates a
   random key as long as the plaintext message, encrypts the plaintext (output on
   stdout) and outputs the key one stderr, which is useful for redirecting it to
   a file like `msg.key`.
 * [Playfair](https://en.wikipedia.org/wiki/Playfair_cipher)
+* [Polybius Square](https://en.wikipedia.org/wiki/Polybius_square)
 * [Scytale](https://en.wikipedia.org/wiki/Scytale)
 * [Vigenère](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher)
 
-### Grid
-
-Since the "grid cipher" is the only not so well known algorithm in `ciphers`, there is a small tutorial here.
-
-```
-x 1 2 3 4 5
-1 A B C D E
-2 F G H I K
-3 L M N O P
-4 Q R S T U
-5 V W X Y Z
-```
-(`I/J` have the same position: `24`)
-
-To encode a character of information, one combines the row and the column number of the character.
-This is then done for all characters in the message. Note that this is a _very_ weak cipher and really
-should not be used.
-
 ## Building
 
-* To build, run `stack build`. This will put an executable called `ciphers-exe` into
-  `.stack-work/dist/$ARCH_$OS/Cabal-$CABAL_VERSION/build/ciphers-exe/`.
+* To build, run `stack build`. This will put an executable called `ciphers` into
+  `.stack-work/dist/$ARCH_$OS/Cabal-$CABAL_VERSION/build/ciphers/`.
 * A user-wide installation can be issued with `stack install`.
 
 ## Usage
@@ -46,9 +29,10 @@ should not be used.
 ```
 ciphers - a text filter for various cryptographic ciphers
 
-Usage: ciphers-exe (-c|--cipher CIPHER[:KEY]) [-d|--decrypt]
+Usage: ciphers (-c|--cipher CIPHER[:KEY]) [-d|--decrypt]
   Encrypt/decrypt various cipher algorithms. Currently available: atbash,
-  caesar:N, grid, onetimepad, playfair:KEY, scytale:N, vigenere:KEY.
+  autokey:KEY, caesar:N, onetimepad, playfair:KEY, polybius, scytale:N,
+  vigenere:KEY.
 
 Available options:
   -h,--help                Show this help text
@@ -59,19 +43,19 @@ Available options:
 ## Examples
 
 ```sh
-% ciphers-exe -c caesar:3 <<< "Veni, vidi, vici."
+% ciphers -c caesar:3 <<< "Veni, vidi, vici."
 Yhql, ylgl, ylfl.
 
-% ciphers-exe -d -c caesar:3 <<< "Yhql, ylgl, ylfl."
+% ciphers -d -c caesar:3 <<< "Yhql, ylgl, ylfl."
 Veni, vidi, vici.
 
-% ciphers-exe -cvigenere:snake <<< "meet me at elephant lake"
+% ciphers -cvigenere:snake <<< "meet me at elephant lake"
 fsfe fs ly smpuaooe eolp
 
-% ciphers-exe -d -cvigenere:snake <<< "fsfe fs ly smpuaooe eolp"
+% ciphers -d -cvigenere:snake <<< "fsfe fs ly smpuaooe eolp"
 meet me at elephant lake
 
-% ciphers-exe -c onetimepad <<< "hello world" 2> msg.key
+% ciphers -c onetimepad <<< "hello world" 2> msg.key
 wxjmc iaolo
 
 % cat msg.key

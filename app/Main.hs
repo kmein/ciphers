@@ -7,8 +7,9 @@ import System.IO (stderr, hPutStr)
 import System.Random (newStdGen)
 import Text.Cipher
     ( atbash, unatbash
+    , autokey, unautokey
     , caesar, uncaesar
-    , grid, ungrid
+    , polybius, unpolybius
     , oneTimePad
     , playfair, unplayfair
     , scytale, unscytale
@@ -17,8 +18,9 @@ import Text.Cipher
 
 data Cipher
    = Atbash
+   | Autokey String
    | Caesar Int
-   | Grid
+   | Polybius
    | OneTimePad
    | Playfair String
    | Scytale Int
@@ -27,7 +29,11 @@ data Cipher
 
 instance Read Cipher where
     readsPrec prec r =
-        tryParse [("atbash", Atbash), ("grid", Grid), ("onetimepad", OneTimePad)] r
+        tryParse [("atbash", Atbash), ("polybius", Polybius), ("onetimepad", OneTimePad)] r
+            ++ [(Autokey key, u)
+                | ("autokey", s) <- lex r
+                , (":", t) <- lex s
+                , (key, u) <- lex t]
             ++ [(Caesar n, u)
                 | ("caesar", s) <- lex r
                 , (":", t) <- lex s
@@ -80,10 +86,12 @@ doCipher (CiphersOptions c d) =
             case (c, d) of
               (Atbash        , Encrypt) -> atbash
               (Atbash        , Decrypt) -> unatbash
+              (Autokey key   , Encrypt) -> autokey key
+              (Autokey key   , Decrypt) -> unautokey key
               (Caesar shift  , Encrypt) -> caesar shift
               (Caesar shift  , Decrypt) -> uncaesar shift
-              (Grid          , Encrypt) -> grid
-              (Grid          , Decrypt) -> ungrid
+              (Polybius      , Encrypt) -> polybius
+              (Polybius      , Decrypt) -> unpolybius
               (Playfair key  , Encrypt) -> fromMaybe [] . playfair key
               (Playfair key  , Decrypt) -> fromMaybe [] . unplayfair key
               (Scytale perim , Encrypt) -> scytale perim
@@ -99,5 +107,5 @@ main = execParser opts >>= doCipher
           info (helper <*> ciphersArgs)
               (fullDesc
               <> progDesc "Encrypt/decrypt various cipher algorithms.\n\
-              \Currently available: atbash, caesar:N, grid, onetimepad, playfair:KEY, scytale:N, vigenere:KEY."
+              \Currently available: atbash, autokey:KEY, caesar:N, onetimepad, playfair:KEY, polybius, scytale:N, vigenere:KEY."
               <> header "ciphers - a text filter for various cryptographic ciphers")
