@@ -11,6 +11,7 @@ import Data.List.Split   (chunksOf)
 import Data.Maybe        (listToMaybe)
 import Data.String.Utils (replace)
 import Text.Cipher.Types
+import Text.Cipher.Util  (makeAlpha)
 
 type Square a = Array (Int, Int) a
 
@@ -19,26 +20,6 @@ array2D ::
        (Int, Int) -- ^ n * m
     -> [e] -> Square e
 array2D maxCoord = listArray ((1, 1), maxCoord)
-
--- | Conditionally applies a function to a value.
-applyWhen ::
-       (a -> Bool) -- ^ a predicate
-    -> (a -> a) -- ^ a function
-    -> a -- ^ a value
-    -> a
-applyWhen p f x
-    | p x = f x
-    | otherwise = x
-
--- | Generates a playfair table starting with the specified string.
---
--- >>> makeTable "hello"
--- "HELOABCDFGIKMNPQRSTUVWXYZ"
-makeTable :: String -> String
-makeTable k = nub key ++ (alpha \\ key)
-    where
-      alpha = ['A' .. 'Z'] \\ "J"
-      key = map toUpper =<< words k
 
 -- | Turns a playfair table into a 5*5 alphabet square.
 makeSquare :: [a] -> Square a
@@ -94,7 +75,7 @@ codeHelper :: (Square Char -> (Char, Char) -> Maybe (Char, Char))
     -> String -> String -> Maybe String
 codeHelper subs key =
     fmap unparsePair .
-    mapM (subs (makeSquare $ makeTable key)) .
+    mapM (subs (makeSquare $ makeAlpha key \\ "J")) .
     parsePair
 
 formatEncode :: String -> String

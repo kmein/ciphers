@@ -1,13 +1,14 @@
 module Text.Cipher (module Cipher) where
 
-import Text.Cipher.Atbash     as Cipher (atbash, unatbash)
-import Text.Cipher.Autokey    as Cipher (autokey, unautokey)
-import Text.Cipher.Caesar     as Cipher (caesar, uncaesar)
-import Text.Cipher.Polybius   as Cipher (polybius, unpolybius)
-import Text.Cipher.OneTimePad as Cipher (oneTimePad)
-import Text.Cipher.Playfair   as Cipher (playfair, unplayfair)
-import Text.Cipher.Scytale    as Cipher (scytale, unscytale)
-import Text.Cipher.Vigenere   as Cipher (vigenere, unvigenere)
+import Text.Cipher.Atbash       as Cipher (atbash, unatbash)
+import Text.Cipher.Autokey      as Cipher (autokey, unautokey)
+import Text.Cipher.Caesar       as Cipher (caesar, uncaesar)
+import Text.Cipher.Polybius     as Cipher (polybius, unpolybius)
+import Text.Cipher.OneTimePad   as Cipher (oneTimePad)
+import Text.Cipher.Playfair     as Cipher (playfair, unplayfair)
+import Text.Cipher.Scytale      as Cipher (scytale, unscytale)
+import Text.Cipher.Substitution as Cipher (substitution, unsubstitution)
+import Text.Cipher.Vigenere     as Cipher (vigenere, unvigenere)
 
 --
 -- square :: String -> String
