@@ -48,6 +48,11 @@ test_uncaesar =
            (uncaesar (-3) "qeb nrfzh yoltk clu grjmp lsbo qeb ixwv ald")
            "the quick brown fox jumps over the lazy dog"
 
+test_playfair =
+    do assertEqual
+           (playfair "playfairexample" "hide the gold in the treestump")
+           (Just "BM OD ZB XD NA BE KU DM UI XM MO UV IF")
+
 -- playfair, scytale, substitution
 
 test_vigenere =
