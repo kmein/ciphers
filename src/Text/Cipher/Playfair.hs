@@ -1,6 +1,7 @@
 -- | This module implements the so-called Playfair cipher, a polygraphic
 -- (digraphic) substitution cipher invented by C. Wheatstone. For a detailed
 -- description, see <https://en.wikipedia.org/wiki/Playfair_cipher Wikipedia>.
+{-# LANGUAGE LambdaCase #-}
 module Text.Cipher.Playfair (playfair, unplayfair) where
 
 import Control.Monad     (guard)
@@ -80,14 +81,15 @@ codeHelper subs key =
 
 formatEncode :: String -> String
 formatEncode =
-    map toUpper .
-    unwords .
-    map (\[x, y] -> if x == y then [x, 'x'] else [x, y]) .
-    chunksOf 2 .
-    replace "j" "i" .
-    concatMap adjustLength .
-    words .
-    filter (\n -> n `elem` (['A'..'Z'] ++ ['a'..'z']))
+    map toUpper
+    . unwords
+    . chunksOf 2
+    . adjustLength
+    . concatMap (\case [x] -> [x]; [x, y] -> if x == y then [x, 'x', y] else [x, y])
+    . chunksOf 2
+    . concat . words
+    . replace "j" "i"
+    . filter (\n -> n `elem` (['A'..'Z'] ++ ['a'..'z']))
     where
       adjustLength str
           | odd (length str) = str ++ "x"
