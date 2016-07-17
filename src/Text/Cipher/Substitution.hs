@@ -2,8 +2,8 @@
 -- is encoded using a given key and then the characters are looked up.
 --
 -- For example, an alphabet encoded with hello would look like
--- "HELOABCDFGIJKMNPQRSTUVWXYZ".
--- Then, "A" would be "H" and "B" would be "E".
+-- /HELOABCDFGIJKMNPQRSTUVWXYZ/.
+-- Then, /A/ would be /H/ and /B/ would be /E/.
 module Text.Cipher.Substitution where
 
 import Data.Char
