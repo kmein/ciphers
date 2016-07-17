@@ -53,6 +53,11 @@ test_playfair =
            (playfair "playfairexample" "hide the gold in the treestump")
            (Just "BM OD ZB XD NA BE KU DM UI XM MO UV IF")
 
+test_unplayfair =
+    do assertEqual
+           (unplayfair "playfairexample" "BM OD ZB XD NA BE KU DM UI XM MO UV IF")
+           (Just "HI DE TH EG OL DI NT HE TR EX ES TU MP")
+
 -- playfair, scytale, substitution
 
 test_vigenere =
