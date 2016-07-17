@@ -16,6 +16,7 @@ Meet `ciphers`—the Swiss Army Knife of classical cryptography!
 * [Playfair](https://en.wikipedia.org/wiki/Playfair_cipher)
 * [Polybius Square](https://en.wikipedia.org/wiki/Polybius_square)
 * [Scytale](https://en.wikipedia.org/wiki/Scytale)
+* [Substitution](#)
 * [Vigenère](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher)
 
 ## Building
@@ -29,40 +30,48 @@ Meet `ciphers`—the Swiss Army Knife of classical cryptography!
 ```
 ciphers - a text filter for various cryptographic ciphers
 
-Usage: ciphers (-c|--cipher CIPHER[:KEY]) [-d|--decrypt]
-               [-g|--grouped BLOCK-SIZE]
-  Encrypt/decrypt various cipher algorithms. Currently available: atbash,
-  autokey:KEY, caesar:N, onetimepad, playfair:KEY, polybius, scytale:N,
-  vigenere:KEY.
+Usage: ciphers COMMAND [-d|--decrypt] [-g|--grouped BLOCK-SIZE]
+  Encrypt/decrypt various cipher algorithms.
 
 Available options:
   -h,--help                Show this help text
-  -c,--cipher CIPHER[:KEY] choose the cipher algorithm
-  -d,--decrypt             act as decrypt filter
-  -g,--grouped BLOCK-SIZE  group output in evenly sized blocks
+  -d,--decrypt             Decrypt stdin
+  -g,--grouped BLOCK-SIZE  Group output in evenly sized blocks
+
+Available commands:
+  atbash                   Atbash cipher
+  autokey                  Autokey cipher
+  caesar                   Caesar cipher
+  onetimepad               One-time pad with random key. (Key is output on
+                           stderr)
+  playfair                 Playfair cipher
+  polybius                 Polybius square
+  scytale                  Scytale
+  substitution             Alphabetical substitution
+  vigenere                 Vigenère cipher
 ```
 
 ## Examples
 
 ```sh
-% ciphers -c caesar:3 <<< "Veni, vidi, vici."
+% ciphers caesar -k3 <<< "Veni, vidi, vici."
 Yhql, ylgl, ylfl.
 
-% ciphers -d -c caesar:3 <<< "Yhql, ylgl, ylfl."
+% ciphers -d caesar -k3 <<< "Yhql, ylgl, ylfl."
 Veni, vidi, vici.
 
-% ciphers -cvigenere:snake <<< "meet me at elephant lake"
+% ciphers vigenere --key=snake <<< "meet me at elephant lake"
 fsfe fs ly smpuaooe eolp
 
-% ciphers -d -cvigenere:snake <<< "fsfe fs ly smpuaooe eolp"
+% ciphers -d vigenere --key=snake <<< "fsfe fs ly smpuaooe eolp"
 meet me at elephant lake
 
-% ciphers -c onetimepad <<< "hello world" 2> msg.key
+% ciphers onetimepad <<< "hello world" 2> msg.key
 wxjmc iaolo
 
 % cat msg.key
 osxanbllwnkx
 
-% ciphers -g4 -cplayfair:example <<< "hide the gold in the treestump"
+% ciphers -g4 playfair -k example <<< "hide the gold in the treestump"
 IKLM QNLO UGCK TZGX OSXA TOYE EA
 ```
