@@ -4,7 +4,7 @@ import Control.Monad (unless)
 import Data.List.Split (chunksOf)
 import Data.Maybe (fromMaybe)
 import Options.Applicative
-import System.IO (stderr, hPutStr)
+import System.IO (stderr, hPutStr, hPutStrLn)
 import System.Random (newStdGen)
 import Text.Cipher
     ( atbash, unatbash
@@ -81,8 +81,8 @@ doCipher (CiphersOptions c d g) =
        then unless (d == Decrypt) $
             do inp <- getContents
                (cipherText, key) <- oneTimePad inp <$> newStdGen
-               putStr cipherText
-               hPutStr stderr key
+               putStrLn $ processGrouping g id cipherText
+               hPutStrLn stderr key
        else interact $ processGrouping g $
             case (c, d) of
               (Atbash           , Encrypt) -> atbash
