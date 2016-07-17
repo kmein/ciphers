@@ -10,6 +10,7 @@ import Data.List         (nub, (\\))
 import Data.List.Split   (chunksOf)
 import Data.Maybe        (listToMaybe)
 import Data.String.Utils (replace)
+import Text.Cipher.Types
 
 type Square a = Array (Int, Int) a
 
@@ -117,13 +118,13 @@ formatEncode =
 --
 -- __Note:__ Any kind of input is accepted, but characters not included in the
 -- upper and lower case alphabets will be filtered out.
-playfair :: String -> String -> Maybe String
+playfair :: Key -> Message Plain -> Maybe (Message Cipher)
 playfair key = codeHelper encodePair key . formatEncode
 
 -- | Decrypts a Playfair-encrypted text given a key phrase.
 --
 -- __Note:__ The given ciphertext /must/ be in uppercase ASCII letters, grouped
 -- in twos.
-unplayfair :: String -> String -> Maybe String
+unplayfair :: Key -> Message Cipher -> Maybe (Message Plain)
 unplayfair = codeHelper decodePair
 

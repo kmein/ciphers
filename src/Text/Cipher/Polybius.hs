@@ -9,13 +9,14 @@ import Data.Char (toLower)
 import Data.List (delete, elemIndex, transpose)
 import Data.List.Split (chunksOf)
 import Data.Maybe (isJust)
+import Text.Cipher.Types
 
 -- | Returns the Polybius-square-encrypted version of the plaintext in
 -- form of digits in groups of two. Unknown characters are mapped to "00".
 --
 -- >>> polybius "hello world"
 -- "32 51 13 13 43 00 25 43 24 13 41"
-polybius :: String -> String
+polybius :: Message Plain -> Message Cipher
 polybius = unwords . map polybiusVal
     where
       table = chunksOf 5 (delete 'j' ['a'..'z'])
@@ -34,13 +35,13 @@ polybius = unwords . map polybiusVal
 --
 -- __Note:__ The input string has to consist entirely of digits in groups
 -- of two.
-unpolybius :: String -> String
+unpolybius :: Message Cipher -> Message Plain
 unpolybius = map unpolybiusVal . words
     where
-      unpolybiusVal "00"    = ' '
+      unpolybiusVal "00" = ' '
       unpolybiusVal (y:x:_) = table !! (x' - 1) !! (y' - 1)
           where
             [x', y'] = map (read . return) [x, y]
             table = chunksOf 5 (delete 'j' ['a'..'z'])
-      unpolybiusVal _       = '\NUL'
+      unpolybiusVal _ = '\NUL'
 

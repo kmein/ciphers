@@ -4,6 +4,7 @@
 module Text.Cipher.Vigenere where
 
 import Data.Maybe (fromMaybe)
+import Text.Cipher.Types
 import Text.Cipher.Util (charAtPos, alphabetPos)
 
 -- | Given a passphrase, encrypts the given string using the Vigenère encryption
@@ -13,7 +14,7 @@ import Text.Cipher.Util (charAtPos, alphabetPos)
 --
 -- __Note__: Because this function internally uses  'charAtPos', it will always
 -- return a lower cased cipher text. Unknown characters are not encrypted.
-vigenere :: String -> String -> String
+vigenere :: Key -> Message Plain -> Message Cipher
 vigenere = zipWith shift . cycle
     where
       shift k c =
@@ -26,7 +27,7 @@ vigenere = zipWith shift . cycle
 --
 -- __Note:__ Unknown characters are not encrypted. Upper case is transformed
 -- into lower case.
-unvigenere :: String -> String -> String
+unvigenere :: Key -> Message Cipher -> Message Plain
 unvigenere = zipWith unshift . cycle
     where
       unshift k c =

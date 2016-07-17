@@ -3,11 +3,12 @@
 module Text.Cipher.Atbash where
 
 import Data.Maybe (fromMaybe)
+import Text.Cipher.Types
 
 -- | The Atbash cipher, as a simple substitution cipher, encrypts letters
 -- by mapping them to the same position in a reversed standard Latin alphabet
 -- (i. e. A to Z, B to Y, etc.).
-atbash :: String -> String
+atbash :: Message Plain -> Message Cipher
 atbash = map atbashChar
     where
       atbashChar c = fromMaybe c $ lookup c dict
@@ -19,6 +20,6 @@ atbash = map atbashChar
 --
 -- prop> atbash (atbash str) = str
 -- prop> atbash = unatbash
-unatbash :: String -> String
+unatbash :: Message Cipher -> Message Plain
 unatbash = atbash
 

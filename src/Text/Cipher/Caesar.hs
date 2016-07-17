@@ -4,6 +4,7 @@
 module Text.Cipher.Caesar where
 
 import Data.Maybe (fromMaybe)
+import Text.Cipher.Types
 import Text.Cipher.Util (alphabetPos, charAtPos)
 
 -- | Given an integer, shifts all characters that are part of the standard
@@ -12,7 +13,7 @@ import Text.Cipher.Util (alphabetPos, charAtPos)
 --
 -- >>> caesar 1 "abc"
 -- "bcd"
-caesar :: Int -> String -> String
+caesar :: Int -> Message Plain -> Message Cipher
 caesar n = map caesarChar
     where
       -- caesarChar n c =
@@ -27,6 +28,6 @@ caesar n = map caesarChar
 -- left.
 --
 -- prop> uncaesar (caesar n str) = str
-uncaesar :: Int -> String -> String
+uncaesar :: Int -> Message Cipher -> Message Plain
 uncaesar n = caesar (-n)
 

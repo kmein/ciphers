@@ -2,12 +2,14 @@
 -- info, see <https://en.wikipedia.org/wiki/Scytale Wikipedia>.
 module Text.Cipher.Scytale where
 
+import Text.Cipher.Types
+
 -- | Given a perimeter for the scytale, transpose a text from
 -- any character set.
 --
 -- >>> scytale 5 "какая сегодня погода"
 -- к доаснгкеяоаг дяопа
-scytale :: Int -> String -> String
+scytale :: Int -> Message Plain -> Message Cipher
 scytale perimeter text =
     do let text' = ensure perimeter text
        x <- [0..(perimeter - 1)]
@@ -19,7 +21,7 @@ scytale perimeter text =
           | otherwise = ensure perimeter (text ++ " ")
 
 -- | This is the inverse operation to the 'scytale' function.
-unscytale :: Int -> String -> String
+unscytale :: Int -> Message Cipher -> Message Plain
 unscytale perimeter text = scytale perimeter' text
     where perimeter' = length text `div` perimeter
 

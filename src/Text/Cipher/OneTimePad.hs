@@ -6,11 +6,12 @@ module Text.Cipher.OneTimePad where
 
 import Control.Monad (replicateM)
 import System.Random (RandomGen, randomRs)
+import Text.Cipher.Types
 import Text.Cipher.Vigenere
 
 -- | Given a generator with which to generate the random key and a plaintext,
 -- returns the cipher text and the key it was encrypted with.
-oneTimePad :: (RandomGen g) => String -> g -> (String, String)
+oneTimePad :: (RandomGen g) => Message Plain -> g -> (Message Cipher, Key)
 oneTimePad str g = (vigenere key str, key)
     where
       key = randomKey (length str) g
