@@ -7,18 +7,55 @@ import Text.Cipher
 main :: IO ()
 main = htfMain htf_thisModulesTests
 
-prop_caesar xs =
-    forAll arbitrary $ \n ->
-        map toLower xs == uncaesar n (caesar n xs)
+test_atbash =
+    do assertEqual (atbash "irk") "rip"
+       assertEqual (atbash "low") "old"
+       assertEqual (atbash "hob") "sly"
+       assertEqual (atbash "hold") "slow"
+       assertEqual (atbash "holy") "slob"
+       assertEqual (atbash "horn") "slim"
+       assertEqual (atbash "glow") "told"
+       assertEqual (atbash "grog") "tilt"
+       assertEqual (atbash "zoo") "all"
+       assertEqual (atbash "wizard") "draziw"
 
-prop_atbash xs = xs == unatbash (atbash xs)
+prop_atbash xs = unatbash (atbash xs) == xs
 
-prop_scytale xs =
-    forAll arbitrary $ \n ->
-        (n > 0) && (n == length xs) ==>
-            xs == unscytale n (scytale n xs)
+test_autokey =
+    do assertEqual
+           (autokey "kilt" "meetatthefountain")
+           "wmpmmxxaeyhbryoca"
+       assertEqual
+           (autokey "queenly" "attackatdawn")
+           "qnxepvytwtwp"
 
-prop_vigenere xs =
-    forAll arbitrary $ \key ->
-        all (`elem` ['a'..'z']) (key ++ xs) ==>
-            xs == unvigenere key (vigenere key xs)
+test_unautokey =
+    do assertEqual
+           (unautokey "kilt" "wmpmmxxaeyhbryoca")
+           "meetatthefountain"
+       assertEqual
+           (unautokey "queenly" "qnxepvytwtwp")
+           "attackatdawn"
+
+test_caesar =
+    do assertEqual
+           (caesar (-3) "the quick brown fox jumps over the lazy dog")
+           "qeb nrfzh yoltk clu grjmp lsbo qeb ixwv ald"
+
+
+test_uncaesar =
+    do assertEqual
+           (uncaesar (-3) "qeb nrfzh yoltk clu grjmp lsbo qeb ixwv ald")
+           "the quick brown fox jumps over the lazy dog"
+
+-- playfair, scytale, substitution
+
+test_vigenere =
+    do assertEqual
+           (vigenere "lemon" "attackatdawn")
+           "lxfopvefrnhr"
+
+test_unvigenere =
+    do assertEqual
+           (unvigenere "lemon" "lxfopvefrnhr")
+           "attackatdawn"
