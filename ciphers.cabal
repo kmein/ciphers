@@ -23,7 +23,9 @@ library
                      , Text.Cipher.OneTimePad
                      , Text.Cipher.Playfair
                      , Text.Cipher.Scytale
+                     , Text.Cipher.Substitution
                      , Text.Cipher.Vigenere
+                     , Text.Cipher.Types
                      , Text.Cipher.Util
   build-depends:       base >= 4.7 && < 5
                      , array

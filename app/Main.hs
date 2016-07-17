@@ -14,6 +14,7 @@ import Text.Cipher
     , oneTimePad
     , playfair, unplayfair
     , scytale, unscytale
+    , substitution, unsubstitution
     , vigenere, unvigenere
     )
 
@@ -25,6 +26,7 @@ data Cipher
    | OneTimePad
    | Playfair String
    | Scytale Int
+   | Substitution String
    | Vigenere String
    deriving (Eq)
 
@@ -58,6 +60,8 @@ ciphersArgs =
                 (info (pure Polybius) $ progDesc "Polybius square")
             <> command "scytale"
                 (info ((Scytale . read) <$> keyParser) $ progDesc "Scytale")
+            <> command "substitution"
+                (info (Substitution <$> keyParser) $ progDesc "Alphabetical substitution")
             <> command "vigenere"
                 (info (Vigenere <$> keyParser) $ progDesc "Vigenère cipher"))
         <*> flag Encrypt Decrypt
@@ -81,20 +85,22 @@ doCipher (CiphersOptions c d g) =
                hPutStr stderr key
        else interact $ processGrouping g $
             case (c, d) of
-              (Atbash        , Encrypt) -> atbash
-              (Atbash        , Decrypt) -> unatbash
-              (Autokey key   , Encrypt) -> autokey key
-              (Autokey key   , Decrypt) -> unautokey key
-              (Caesar shift  , Encrypt) -> caesar shift
-              (Caesar shift  , Decrypt) -> uncaesar shift
-              (Polybius      , Encrypt) -> polybius
-              (Polybius      , Decrypt) -> unpolybius
-              (Playfair key  , Encrypt) -> fromMaybe [] . playfair key
-              (Playfair key  , Decrypt) -> fromMaybe [] . unplayfair key
-              (Scytale perim , Encrypt) -> scytale perim
-              (Scytale perim , Decrypt) -> unscytale perim
-              (Vigenere key  , Encrypt) -> vigenere key
-              (Vigenere key  , Decrypt) -> unvigenere key
+              (Atbash           , Encrypt) -> atbash
+              (Atbash           , Decrypt) -> unatbash
+              (Autokey key      , Encrypt) -> autokey key
+              (Autokey key      , Decrypt) -> unautokey key
+              (Caesar shift     , Encrypt) -> caesar shift
+              (Caesar shift     , Decrypt) -> uncaesar shift
+              (Polybius         , Encrypt) -> polybius
+              (Polybius         , Decrypt) -> unpolybius
+              (Playfair key     , Encrypt) -> fromMaybe [] . playfair key
+              (Playfair key     , Decrypt) -> fromMaybe [] . unplayfair key
+              (Scytale perim    , Encrypt) -> scytale perim
+              (Scytale perim    , Decrypt) -> unscytale perim
+              (Substitution key , Encrypt) -> substitution key
+              (Substitution key , Decrypt) -> unsubstitution key
+              (Vigenere key     , Encrypt) -> vigenere key
+              (Vigenere key     , Decrypt) -> unvigenere key
     where
       processGrouping g' f =
           case g' of
