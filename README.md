@@ -73,5 +73,5 @@ wxjmc iaolo
 osxanbllwnkx
 
 % ciphers -g4 playfair -k example <<< "hide the gold in the treestump"
-IKLM QNLO UGCK TZGX OSXA TOYE EA
+IKLM QNLO UGCK TZGX OSXA MOOZ PE
 ```
