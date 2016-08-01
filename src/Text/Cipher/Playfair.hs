@@ -89,6 +89,9 @@ formatEncode =
     . chunksOf 2
     . concat . words
     . replace "j" "i"
+    . replace "ä" "ae"
+    . replace "ö" "oe"
+    . replace "ü" "ue"
     . filter (\n -> n `elem` ['a'..'z'])
     . map toLower
     where
