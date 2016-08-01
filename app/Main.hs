@@ -6,41 +6,8 @@ import Data.Maybe (fromMaybe)
 import Options.Applicative
 import System.IO (stderr, hPutStr, hPutStrLn)
 import System.Random (newStdGen)
-import Text.Cipher
-    ( atbash, unatbash
-    , autokey, unautokey
-    , caesar, uncaesar
-    , polybius, unpolybius
-    , oneTimePad
-    , playfair, unplayfair
-    , scytale, unscytale
-    , substitution, unsubstitution
-    , vigenere, unvigenere
-    )
 
-data Cipher
-   = Atbash
-   | Autokey String
-   | Caesar Int
-   | Polybius
-   | OneTimePad
-   | Playfair String
-   | Scytale Int
-   | Substitution String
-   | Vigenere String
-   deriving (Eq)
-
-data Direction
-   = Encrypt
-   | Decrypt
-   deriving (Eq)
-
-data CiphersOptions
-   = CiphersOptions
-   { cipher :: Cipher
-   , direction :: Direction
-   , grouped :: Maybe Int
-   }
+import Text.Cipher.Interactive
 
 ciphersArgs :: Parser CiphersOptions
 ciphersArgs =
@@ -76,36 +43,15 @@ ciphersArgs =
           <> help "use KEY for encryption")
 
 doCipher :: CiphersOptions -> IO ()
-doCipher (CiphersOptions c d g) =
+doCipher opts@(CiphersOptions c d g) =
     if c == OneTimePad
        then unless (d == Decrypt) $
             do inp <- getContents
                (cipherText, key) <- oneTimePad inp <$> newStdGen
                putStrLn $ processGrouping g id cipherText
                hPutStrLn stderr key
-       else interact $ processGrouping g $
-            case (c, d) of
-              (Atbash           , Encrypt) -> atbash
-              (Atbash           , Decrypt) -> unatbash
-              (Autokey key      , Encrypt) -> autokey key
-              (Autokey key      , Decrypt) -> unautokey key
-              (Caesar shift     , Encrypt) -> caesar shift
-              (Caesar shift     , Decrypt) -> uncaesar shift
-              (Polybius         , Encrypt) -> polybius
-              (Polybius         , Decrypt) -> unpolybius
-              (Playfair key     , Encrypt) -> fromMaybe [] . playfair key
-              (Playfair key     , Decrypt) -> fromMaybe [] . unplayfair key
-              (Scytale perim    , Encrypt) -> scytale perim
-              (Scytale perim    , Decrypt) -> unscytale perim
-              (Substitution key , Encrypt) -> substitution key
-              (Substitution key , Decrypt) -> unsubstitution key
-              (Vigenere key     , Encrypt) -> vigenere key
-              (Vigenere key     , Decrypt) -> unvigenere key
+       else interact $ toFunction opts
     where
-      processGrouping g' f =
-          case g' of
-            Just g -> unwords . chunksOf g . concat . words . f
-            Nothing -> f
 
 main :: IO ()
 main = execParser opts >>= doCipher
