@@ -88,8 +88,11 @@ formatEncode =
     . concatMap (\case [x] -> [x]; [x, y] -> if x == y then [x, 'x', y] else [x, y])
     . chunksOf 2
     . concat . words
-    . replace "j" "i"
     . filter (\n -> n `elem` ['a'..'z'])
+    . replace "j" "i"
+    . replace "ä" "ae"
+    . replace "ö" "oe"
+    . replace "ü" "ue"
     . map toLower
     where
       adjustLength str
