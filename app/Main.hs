@@ -1,12 +1,11 @@
 module Main (main) where
 
 import Control.Monad (unless)
-import Data.List.Split (chunksOf)
-import Data.Maybe (fromMaybe)
 import Options.Applicative
 import System.IO (stderr, hPutStr, hPutStrLn)
 import System.Random (newStdGen)
 
+import Text.Cipher (oneTimePad)
 import Text.Cipher.Interactive
 
 ciphersArgs :: Parser CiphersOptions

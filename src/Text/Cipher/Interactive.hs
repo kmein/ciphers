@@ -1,5 +1,8 @@
 module Text.Cipher.Interactive where
 
+import Data.List.Split (chunksOf)
+import Data.Maybe (fromMaybe)
+
 import Text.Cipher
 
 data Cipher
