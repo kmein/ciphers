@@ -6,7 +6,7 @@ module Text.Cipher.Playfair (playfair, unplayfair) where
 
 import Control.Monad     (guard)
 import Data.Array        (Array, assocs, elems, listArray, (!))
-import Data.Char         (toUpper)
+import Data.Char         (toLower, toUpper)
 import Data.List         (nub, (\\))
 import Data.List.Split   (chunksOf)
 import Data.Maybe        (listToMaybe)
@@ -89,7 +89,8 @@ formatEncode =
     . chunksOf 2
     . concat . words
     . replace "j" "i"
-    . filter (\n -> n `elem` (['A'..'Z'] ++ ['a'..'z']))
+    . filter (\n -> n `elem` ['a'..'z'])
+    . map toLower
     where
       adjustLength str
           | odd (length str) = str ++ "x"
