@@ -19,6 +19,7 @@ library
                      , Text.Cipher.Atbash
                      , Text.Cipher.Autokey
                      , Text.Cipher.Caesar
+                     , Text.Cipher.Interactive
                      , Text.Cipher.Polybius
                      , Text.Cipher.OneTimePad
                      , Text.Cipher.Playfair
