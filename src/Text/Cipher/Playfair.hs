@@ -88,6 +88,13 @@ formatEncode =
     . concatMap (\case [x] -> [x]; [x, y] -> if x == y then [x, 'x', y] else [x, y])
     . chunksOf 2
     . concat . words
+<<<<<<< HEAD
+=======
+    . replace "j" "i"
+    . replace "ä" "ae"
+    . replace "ö" "oe"
+    . replace "ü" "ue"
+>>>>>>> de033ce3b0e9f8d9f289c93267ffada3907fad1e
     . filter (\n -> n `elem` ['a'..'z'])
     . replace "j" "i"
     . replace "ä" "ae"
