@@ -1,5 +1,6 @@
 module Text.Cipher (module Cipher) where
 
+import Text.Cipher.ADFGVX       as Cipher (adfgvx)
 import Text.Cipher.Atbash       as Cipher (atbash, unatbash)
 import Text.Cipher.Autokey      as Cipher (autokey, unautokey)
 import Text.Cipher.Caesar       as Cipher (caesar, uncaesar)

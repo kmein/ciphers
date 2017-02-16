@@ -5,14 +5,16 @@ import Options.Applicative
 import System.IO (stderr, hPutStr, hPutStrLn)
 import System.Random (newStdGen)
 
-import Text.Cipher (oneTimePad)
+import Text.Cipher (adfgvx, oneTimePad)
 import Text.Cipher.Interactive
 
 ciphersArgs :: Parser CiphersOptions
 ciphersArgs =
     CiphersOptions
         <$> subparser
-            (command "atbash"
+            (command "adfgvx"
+                (info (uncurry ADFGVX <$> doubleKeyParser) $ progDesc "ADFGVX cipher")
+            <> command "atbash"
                 (info (pure Atbash) $ progDesc "Atbash cipher")
             <> command "autokey"
                 (info (Autokey <$> keyParser) $ progDesc "Autokey cipher")
@@ -40,17 +42,28 @@ ciphersArgs =
       keyParser =
           strOption (long "key" <> short 'k' <> metavar "KEY"
           <> help "use KEY for encryption")
+      doubleKeyParser =
+          (,)
+          <$> strOption (long "key" <> short 'k'
+              <> metavar "SQUARE KEY" <> help "use SQUARE KEY for the Polybius square")
+          <*> strOption (long "fractionation" <> short 'f'
+              <> metavar "FRACTIONATION KEY" <> help "use FRACTIONATION KEY for the transposition")
 
 doCipher :: CiphersOptions -> IO ()
 doCipher opts@(CiphersOptions c d g) =
-    if c == OneTimePad
-       then unless (d == Decrypt) $
+    case c of
+        OneTimePad ->
+            unless (d == Decrypt) $
             do inp <- getContents
                (cipherText, key) <- oneTimePad inp <$> newStdGen
                putStrLn $ processGrouping g id cipherText
                hPutStrLn stderr key
-       else interact $ toFunction opts
-    where
+        ADFGVX key1 key2 ->
+            unless (d == Decrypt) $
+            do inp <- getContents
+               let cipherText = adfgvx key1 key2 inp
+               putStrLn $ processGrouping g id cipherText
+        _ -> interact $ toFunction opts
 
 main :: IO ()
 main = execParser opts >>= doCipher

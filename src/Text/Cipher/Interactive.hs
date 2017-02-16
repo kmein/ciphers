@@ -7,6 +7,7 @@ import Text.Cipher
 
 data Cipher
    = Atbash
+   | ADFGVX String String
    | Autokey String
    | Caesar Int
    | Polybius

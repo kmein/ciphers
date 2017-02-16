@@ -69,3 +69,8 @@ test_unvigenere =
     do assertEqual
            (unvigenere "lemon" "lxfopvefrnhr")
            "attackatdawn"
+
+test_adfvgx =
+    do assertEqual
+           (adfgvx "na1c3h8tb2ome5wrpd4f6g7i9j0klqsuvxyz" "privacy" "attack at 1200 am")
+           "DGDDDAGDDGAFADDFDADVDVFAADVX"

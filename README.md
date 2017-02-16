@@ -6,6 +6,7 @@ Meet `ciphers`—the Swiss Army Knife of classical cryptography!
 `ciphers` can encrypt and decrypt the following ciphers for you:
 (Note: It does not actually crack them, you have to supply the key or passphrase yourself.)
 
+* [ADFGVX](https://en.wikipedia.org/wiki/ADFGVX_cipher)
 * [Atbash](https://en.wikipedia.org/wiki/Atbash)
 * [Autokey](https://en.wikipedia.org/wiki/Autokey_cipher)
 * [Caesar](https://en.wikipedia.org/wiki/Caesar_cipher) which can also be used for [ROT-13](https://en.wikipedia.org/wiki/Rot13)

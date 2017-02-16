@@ -16,6 +16,7 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Text.Cipher
+                     , Text.Cipher.ADFGVX
                      , Text.Cipher.Atbash
                      , Text.Cipher.Autokey
                      , Text.Cipher.Caesar
