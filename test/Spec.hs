@@ -77,8 +77,6 @@ tests =
          "Vigenere"
          [ testCase "vigenere" (cipher @?= vigenere pass plain)
          , testCase "unvigenere" (plain @?= unvigenere pass cipher)
-         , testProperty "Vigenere.reverse" $ \xs ->
-             vigenere "key" (reverse xs) == reverse (vigenere "key" xs)
          ]
   , testGroup
       "ADFVGX"
