@@ -1,4 +1,4 @@
-# ciphers [Travis CI](https://travis-ci.org/kmein/ciphers.svg?branch=master)
+# ciphers [https://travis-ci.org/kmein/ciphers.svg?branch=master](https://travis-ci.org/kmein/ciphers.svg?branch=master)
 
 Meet `ciphers`—the Swiss Army Knife of classical cryptography!
 
