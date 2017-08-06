@@ -1,8 +1,6 @@
-# ciphers
+# ciphers [![Build Status](https://travis-ci.org/kmein/ciphers.svg?branch=master)](https://travis-ci.org/kmein/ciphers)
 
 Meet `ciphers`—the Swiss Army Knife of classical cryptography!
-
-[![Build Status](https://travis-ci.org/kmein/ciphers.svg?branch=master)](https://travis-ci.org/kmein/ciphers)
 
 ## Features
 `ciphers` can encrypt and decrypt the following ciphers for you:
