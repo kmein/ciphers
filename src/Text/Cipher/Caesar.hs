@@ -27,7 +27,7 @@ caesar n = map caesarChar
 -- | The inverse of the 'caesar' function. Shifts by the given integer to the
 -- left.
 --
--- prop> uncaesar (caesar n str) = str
+-- prop> uncaesar n (caesar n str) == str
 uncaesar :: Int -> Message Cipher -> Message Plain
 uncaesar n = caesar (-n)
 

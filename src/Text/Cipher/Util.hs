@@ -21,7 +21,7 @@ alphabetPos c = elemIndex (toLower c) ['a'..'z']
 --
 -- __Note:__ Returns only lowercase letters.
 --
--- prop> charAtPos =<< alphabetPos c = toLower c
+-- @isAlpha c ==> (charAtPos =<< alphabetPos c) == return (toLower c)@
 charAtPos :: Int -> Maybe Char
 charAtPos p = lookup (abs $ p `mod` 26) (zip [0..] ['a'..'z'])
 
@@ -31,7 +31,7 @@ charAtPos p = lookup (abs $ p `mod` 26) (zip [0..] ['a'..'z'])
 -- >>> makeAlpha "hello"
 -- "HELOABCDFGIJKMNPQRSTUVWXYZ"
 --
--- prop> length (makeAlpha str) == 26
+-- @all isAlpha str ==> length (makeAlpha str) == 26@
 makeAlpha :: String -> String
 makeAlpha k = nub (key ++ alpha)
     where

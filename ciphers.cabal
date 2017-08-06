@@ -52,6 +52,7 @@ test-suite ciphers-test
   main-is:             Spec.hs
   build-depends:       base
                      , ciphers
+                     , doctest
                      , HTF
   default-language:    Haskell2010
 

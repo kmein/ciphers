@@ -7,8 +7,8 @@ import Text.Cipher.Types
 -- | Given a perimeter for the scytale, transpose a text from
 -- any character set.
 --
--- >>> scytale 5 "какая сегодня погода"
--- к доаснгкеяоаг дяопа
+-- >>> scytale 5 "i like trains"
+-- "iei  nltsir ka "
 scytale :: Int -> Message Plain -> Message Cipher
 scytale perimeter text =
     do let text' = ensure perimeter text

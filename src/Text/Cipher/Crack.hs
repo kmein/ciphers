@@ -5,6 +5,8 @@
 -- For now, there is /nothing to see/ here. So feel free to go on.
 module Text.Cipher.Crack () where
 
+import qualified Data.Map as Map
+
 countChars :: String -> String -> Map.Map Char Int
 countChars relevants = foldr (Map.adjust (+ 1)) startMap
     where startMap = Map.fromList (zip relevants (repeat 0))

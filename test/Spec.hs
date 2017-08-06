@@ -1,11 +1,12 @@
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
 
 import Data.Char
+import Test.DocTest
 import Test.Framework
 import Text.Cipher
 
 main :: IO ()
-main = htfMain htf_thisModulesTests
+main = doctest ["src"] >> htfMain htf_thisModulesTests
 
 test_atbash =
     do assertEqual (atbash "irk") "rip"

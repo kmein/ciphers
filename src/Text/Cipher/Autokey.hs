@@ -9,7 +9,7 @@ import Text.Cipher.Vigenere
 -- | Given a key and a text, applies a 'vigenere' shift to the text,
 -- using the given key and a portion of the text.
 --
--- prop> autokey key text = vigenere (key ++ text) text
+-- prop> not (null text) ==> autokey key text == vigenere (key ++ text) text
 autokey :: Key -> Message Plain -> Message Cipher
 autokey key text = vigenere (key ++ text) text
 

@@ -18,8 +18,8 @@ atbash = map atbashChar
 -- Like with <https://en.wikipedia.org/wiki/ROT13 ROT-13>, the encryption
 -- function also functions as a decryptor, so the following properties hold.
 --
--- prop> atbash (atbash str) = str
--- prop> atbash = unatbash
+-- prop> atbash (atbash str) == str
+-- prop> atbash str == unatbash str
 unatbash :: Message Cipher -> Message Plain
 unatbash = atbash
 
